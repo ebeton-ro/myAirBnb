@@ -40,27 +40,28 @@
             class="col-12 text-center"
             v-else
         >
-            <div class="col-11">
-            <div class="text-right">
-                  <v-text-field
-                        class="col-3 d-inline-block pull-right"
-                        v-model="search"
-                        append-icon="mdi-search"
-                        label="Search"
-                        single-line
-                        hide-details
-                ></v-text-field>
-            </div>
-            </div>
             <v-data-table
                 class="col-11 ma-auto"
                 :headers="headerTable"
                 item-key="id"
+                sort-by="rating"
+                sort-desc
                 :items="getStoreApartments"
                 :search="search"
             >
+            <template v-slot:top>
+                <v-spacer></v-spacer>
+                <v-text-field
+                        class="d-inline-block pull-right mx-4"
+                        v-model="search"
+                        append-icon="fas fa-search"
+                        label="Search"
+                        single-line
+                        hide-details
+                ></v-text-field>
+            </template>
             <template v-slot:body="{ items }" >
-                <tr  v-for="item in items" :key="item.name"  @dblclick="addToBookinkgs(item.id)">
+                <tr  v-for="item in items" :key="item.name"  @dblclick="addToBookinkgs(item.id)" class="customTableRow">
                 <td>
                     <v-img :src="item.image.src" :alt="item.image.alt" width="64" class="ma-1"/>
                 </td>
@@ -72,9 +73,6 @@
                 </td>
                 <td>
                     {{item.description}}
-                </td>
-                <td>
-
                 </td>
                 <td>
                     <v-rating
@@ -89,17 +87,16 @@
                     ></v-rating>
                 </td>
                 <td>
+                    {{item.numberOfGuests}}
+                </td>
+                <td>
+                    {{item.numberBedrooms}}
+                </td>
+                <td>
                     {{item.owner.firstName}} {{item.owner.lastName}}
                 </td>
             </tr>
             </template>
-                <template v-slot:no-data>
-                    NO DATA HERE!
-                </template>
-
-                <template v-slot:no-results>
-                    NO RESULTS HERE!
-                </template>
             </v-data-table>
         </div>
     </div>
@@ -129,7 +126,7 @@ export default {
                     value: 'image'
                 },
                 {
-                text: 'Country',
+                    text: 'Country',
                     align: 'left',
                     sortable: true,
                     value: 'country',
@@ -169,13 +166,13 @@ export default {
                 {
                     text: 'Owner',
                     align: 'left',
-                    sortable: true,
+                    sortable: false,
                     value: 'owner',
-                    filter: (value) => {
-                        if (!this.getStoreApartments.owner) return true
-
-                        return String(this.getStoreApartments.owner.firstName + ' ' + this.getStoreApartments.owner.lastName).toLowerCase().includes(value.toLowerCase())
-                    },
+                    // filter: (value) => {
+                    //     if (!this.getStoreApartments.owner) return true
+                    //
+                    //     return String(this.getStoreApartments.owner.firstName + ' ' + this.getStoreApartments.owner.lastName).toLowerCase().includes(value.toLowerCase())
+                    // },
                 }
             ]
         }
@@ -204,5 +201,11 @@ export default {
 </script>
 
 <style scoped>
+.customTableRow td{
+    border-bottom: 1px solid grey;
+}
 
+.customTableRow:last-child td{
+    border-bottom: none;
+}
 </style>

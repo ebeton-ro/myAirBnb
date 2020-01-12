@@ -91,7 +91,7 @@
                         dense
                         text
                         class="pl-0 pr-0"
-                        @click="addToBookinkgs(apartment.id)"
+                        @click="addToBookinkgs(apartment.id, true)"
                     >
                         RESERVE
                     </v-btn>
@@ -134,8 +134,8 @@ export default {
                 this.linkText = this.showMoreText ? 'Hide some':'Show more'
             }
         },
-        addToBookinkgs (key) {
-            alert(key)
+        addToBookinkgs (key, newStatus) {
+            this.$store.dispatch('apartments/changeBookingStatus', {id: key, newStatus: newStatus})
         }
     },
     watch: {
