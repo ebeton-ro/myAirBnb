@@ -2,59 +2,60 @@
   <v-app>
     <v-app-bar
       app
-      color="primary"
+      color="red"
       dark
     >
       <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
+        <v-btn
+          class="mr-2"
+          text
+          @click="changeComponent('apartments')"
+        >
+          <v-icon class="mr-2">mdi-domain</v-icon>
+          <span>Apartment list</span>
+        </v-btn>
+        <v-btn
+          text
+          @click="changeComponent('bookings')"
+        >
+          <v-icon class="mr-2" color="green">mdi-home</v-icon>
+          <span>My bookings</span>
+        </v-btn>
       </div>
 
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      <v-spacer />
     </v-app-bar>
 
     <v-content>
-      <HelloWorld/>
+      <apartments v-if="navigation === 'apartments'" />
+      <bookings v-else />
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld';
-
+import apartments from "../pages/apartments";
+import bookings from "../pages/bookings"
 export default {
   name: 'App',
 
-  components: {
-    HelloWorld,
-  },
-
   data: () => ({
-    //
+    navigation: 'apartments',
+    safeGuards: ['apartments', 'bookings']
   }),
+  methods: {
+    changeComponent(componentName) {
+      if (this.safeGuards.indexOf(componentName) !== -1) {
+        this.navigation = componentName
+      }
+    }
+  },
+  components:{
+    apartments,
+    bookings
+  },
+  beforeMount() {
+    this.$store.dispatch('apartments/dataApartments')
+  }
 };
 </script>
