@@ -2,7 +2,7 @@
     <v-card
         class="pa-2"
         :class="{ 'ma-2 col-2 d-inline-block': isCard, 'col-12': !isCard}"
-        :disabled="!apartment.available"
+        :disabled="!apartment.available && !forceStateEnable"
         hover
     >
         <v-container>
@@ -91,7 +91,7 @@
                         dense
                         text
                         class="pl-0 pr-0"
-                        @click="addToBookinkgs(apartment.id)"
+                        @click="addToBookinkgs(apartment.id, true)"
                     >
                         RESERVE
                     </v-btn>
@@ -104,7 +104,7 @@
 
 <script>
 export default {
-    props: ['apartment', 'isCard'],
+    props: ['apartment', 'isCard', 'forceStateEnable'],
     name: 'apartment',
     data: () => ({
         length: 10,
@@ -134,8 +134,8 @@ export default {
                 this.linkText = this.showMoreText ? 'Hide some':'Show more'
             }
         },
-        addToBookinkgs (key) {
-            alert(key)
+        addToBookinkgs (key, newStatus) {
+            this.$store.dispatch('apartments/changeBookingStatus', {id: key, newStatus: newStatus})
         }
     },
     watch: {
