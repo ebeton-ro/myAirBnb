@@ -31,10 +31,6 @@ export default {
     components: {Apartment},
     computed: {
         ...mapGetters('user', ['getStoreBookings']) /* In case of an user account we need to know the user id or another unique identification */
-    },
-    beforeMount() {
-        // eslint-disable-next-line no-console
-        console.log(this.getStoreBookings)
     }
 }
 </script>

@@ -1,6 +1,4 @@
 export function updateMyBookings (state, payload) {
-    // eslint-disable-next-line no-console
-    console.log(state)
     if (state && state.mybookings && state.mybookings.length) {
         let indexTemp = state.mybookings.findIndex(x => x.id === payload.apartment.id)
         if (indexTemp === -1) { /* We do not have it we push it */
@@ -11,6 +9,4 @@ export function updateMyBookings (state, payload) {
     } else {
         state.mybookings.push(payload.apartment)
     }
-    // eslint-disable-next-line no-console
-    console.log('test', payload, state)
 }
