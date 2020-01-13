@@ -25,17 +25,16 @@
 
       <v-spacer />
     </v-app-bar>
-
     <v-content>
       <apartments v-if="navigation === 'apartments'" />
-      <bookings v-else />
+      <bookings v-if="navigation === 'bookings'"  />
     </v-content>
   </v-app>
 </template>
 
 <script>
 import apartments from "../pages/apartments";
-import bookings from "../pages/bookings"
+import bookings from "../pages/bookings";
 export default {
   name: 'App',
 

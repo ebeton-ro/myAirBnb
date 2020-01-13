@@ -1,7 +1,7 @@
 <template>
     <v-card
-        class="pa-2"
-        :class="{ 'ma-2 col-2 d-inline-block': isCard, 'col-12': !isCard}"
+        class="pa-2 ml-auto mr-auto mt-2 mb-2 mr-md-2 ml-md-2"
+        :class="{ 'col-11 col-sm-7 col-md-3 col-lg-lg-2 col-xl-2 d-inline-block': isCard, 'col-12': !isCard}"
         :disabled="!apartment.available && !forceStateEnable"
         hover
     >
@@ -90,10 +90,10 @@
                     <v-btn
                         dense
                         text
-                        class="pl-0 pr-0"
+                        class="pl-0 pr-0 text-capitalize"
                         @click="addToBookinkgs(apartment.id, true)"
                     >
-                        RESERVE
+                        {{actionButtonText}}
                     </v-btn>
                     <v-spacer />
                 </v-card-actions>
@@ -115,6 +115,7 @@ export default {
         emptyIcon: 'mdi-star-outline',
         fullIcon: 'mdi-star',
         halfIcon: 'mdi-star-half-full',
+        actionButtonText: 'RESERVE'
     }),
     computed:{
         description () {
@@ -159,7 +160,7 @@ export default {
 }
 
 .v-card__text{
-    min-height: 165px;
+    min-height: 165px!important;
 }
 
 .customShowMoreClass{

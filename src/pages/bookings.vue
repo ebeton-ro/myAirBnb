@@ -1,9 +1,14 @@
 <template>
     <div>
-        <v-card>
-            <v-card-title>My bookings</v-card-title>
-        </v-card>
-        <div class="col-11">
+        <div class="col-12">
+            <v-card>
+                <v-card-title>My bookings</v-card-title>
+            </v-card>
+            <v-card class="mt-lg-3 mb-auto" v-if="!getStoreBookings.length">
+                <v-card-title class="red--text"><v-icon color="red">mdi-alert</v-icon> No booking added. Reserve some!</v-card-title>
+            </v-card>
+        </div>
+        <div class="col-12 text-left">
             <apartment
                 v-for="(apartment, index) in getStoreBookings"
                 :key="apartment.id"
