@@ -5,26 +5,19 @@
             item-key="id"
             sort-by="rating"
             sort-desc
+            fixed-header
             :items="getStoreApartments"
-            :search="search"
+            height="650px"
+            calculate-widths
+            width="100%"
     >
-        <template v-slot:top>
-            <v-spacer></v-spacer>
-            <v-text-field
-                    class="d-inline-block pull-right mx-4"
-                    v-model="search"
-                    append-icon="fas fa-search"
-                    label="Search"
-                    single-line
-                    hide-details
-            ></v-text-field>
-        </template>
         <template v-slot:body="{ items }" >
             <tr
                 v-for="item in items"
                 :key="item.name"
-                @dblclick="addToBookinkgs(item.id, false)"
+                @dblclick="addToBookinkgs(item, false)"
                 class="customTableRow"
+                :class=" { 'disabledCustomTableRow': !item.available} "
             >
                 <td>
                     <v-img :src="item.image.src" :alt="item.image.alt" width="64" class="ma-1"/>
@@ -36,7 +29,7 @@
                     {{item.city}}
                 </td>
                 <td>
-                    {{item.description}}
+                    {{item.price}}
                 </td>
                 <td>
                     <v-rating
@@ -49,6 +42,9 @@
                             dense
                             x-small
                     ></v-rating>
+                </td>
+                <td>
+                    {{item.available ? 'Available' : 'Not available'}}
                 </td>
                 <td>
                     {{item.numberOfGuests}}
@@ -69,7 +65,10 @@ export default {
     props: ['getStoreApartments'],
     name: "listTable",
     data: () => ({
-        search: '',
+        emptyIcon: 'mdi-star-outline',
+        fullIcon: 'mdi-star',
+        halfIcon: 'mdi-star-half-full',
+        length: 10,
         headerTable: [
             {
                 text: 'Image',
@@ -90,18 +89,22 @@ export default {
                 value: 'city',
             },
             {
-                text: 'Description',
+                text: 'Price',
                 align: 'left',
                 sortable: false,
-                length: 200,
-                value: 'description',
+                value: 'price',
             },
             {
                 text: 'Rating',
                 align: 'center',
                 sortable: true,
-                length: 200,
                 value: 'rating',
+            },
+            {
+                text: 'Availability',
+                align: 'center',
+                sortable: true,
+                value: 'available',
             },
             {
                 text: 'Number of guests',
@@ -124,8 +127,10 @@ export default {
         ]
     }),
     methods: {
-        addToBookinkgs (key, newStatus) {
-            this.$store.dispatch('apartments/changeBookingStatus', {id: key, newStatus: newStatus})
+        addToBookinkgs (apartment, newStatus) {
+            if (apartment.available) {
+                this.$store.dispatch('apartments/changeBookingStatus', {id: apartment.id, newStatus: newStatus})
+            }
         }
     }
 }
@@ -137,6 +142,9 @@ export default {
         cursor: pointer;
     }
 
+    .customTableRow.disabledCustomTableRow td{
+        cursor: not-allowed;
+    }
     .customTableRow:last-child td{
         border-bottom: none;
     }

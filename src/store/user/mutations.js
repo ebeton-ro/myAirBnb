@@ -10,3 +10,7 @@ export function updateMyBookings (state, payload) {
         state.mybookings.push(payload.apartment)
     }
 }
+
+export function resetBookings(state) {
+    state.mybookings = []
+}

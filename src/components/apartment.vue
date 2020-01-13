@@ -2,7 +2,7 @@
     <v-card
         class="pa-2 ml-auto mr-auto mt-2 mb-2 mr-md-2 ml-md-2"
         :class="{ 'col-11 col-sm-7 col-md-3 col-lg-lg-2 col-xl-2 d-inline-block': isCard, 'col-12': !isCard}"
-        :disabled="!apartment.available && !forceStateEnable"
+        :disabled="!apartment.available && !isBooked"
         hover
     >
         <v-container>
@@ -104,7 +104,7 @@
 
 <script>
 export default {
-    props: ['apartment', 'isCard', 'forceStateEnable'],
+    props: ['apartment', 'isCard', 'isBooked'],
     name: 'apartment',
     data: () => ({
         length: 10,
@@ -115,7 +115,6 @@ export default {
         emptyIcon: 'mdi-star-outline',
         fullIcon: 'mdi-star',
         halfIcon: 'mdi-star-half-full',
-        actionButtonText: 'RESERVE'
     }),
     computed:{
         description () {
@@ -124,6 +123,12 @@ export default {
             }
             this.linkShowMore('initial')
             return this.apartment.description.substr(0, this.maxDescriptionLength) + '...'
+        },
+        actionButtonText () {
+            if (this.isBooked) {
+                return 'Cancel Booking'
+            }
+            return 'RESERVE'
         }
     },
     methods: {

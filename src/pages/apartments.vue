@@ -1,5 +1,5 @@
 <template>
-    <div class="d-lg-table">
+    <div>
     <div class="row">
     <div class="col-12 ma-2">
         Layout:
@@ -21,6 +21,7 @@
         >
             <v-icon>fas fa-list</v-icon>
         </v-btn>
+        <span v-if="gridType !== 'grid'">Double click on an available row to book that apartment</span>
     </div>
     </div>
         <div class="row">
@@ -39,10 +40,11 @@
             />
         </div>
         <div
-            class="col-12 text-center"
+            class="col-12 text-center" style="max-height: 600px"
             v-else
         >
             <list-table
+                class="table-responsive-xl"
                 :getStoreApartments="getStoreApartments"
             ></list-table>
         </div>
@@ -59,11 +61,7 @@ export default {
     data () {
         return {
             isCard: true,
-            emptyIcon: 'mdi-star-outline',
-            fullIcon: 'mdi-star',
-            halfIcon: 'mdi-star-half-full',
             gridType: 'grid', /* this should be stored in localstorage or cookie */
-
         }
     },
     computed: {
