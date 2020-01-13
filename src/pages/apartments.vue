@@ -33,6 +33,7 @@
             :apartment="apartment"
             :index="index"
             :isCard="isCard"
+            :forceStateEnable="false"
             style="text-align: left"
             />
         </div>

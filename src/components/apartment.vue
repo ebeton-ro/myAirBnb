@@ -2,7 +2,7 @@
     <v-card
         class="pa-2"
         :class="{ 'ma-2 col-2 d-inline-block': isCard, 'col-12': !isCard}"
-        :disabled="!apartment.available"
+        :disabled="!apartment.available && !forceStateEnable"
         hover
     >
         <v-container>
@@ -104,7 +104,7 @@
 
 <script>
 export default {
-    props: ['apartment', 'isCard'],
+    props: ['apartment', 'isCard', 'forceStateEnable'],
     name: 'apartment',
     data: () => ({
         length: 10,
