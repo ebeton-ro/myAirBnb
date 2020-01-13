@@ -1,0 +1,13 @@
+<template>
+    <div>My bookings</div>
+</template>
+
+<script>
+    export default {
+        name: "bookings"
+    }
+</script>
+
+<style scoped>
+
+</style>
