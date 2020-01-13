@@ -6,3 +6,13 @@ export function dataApartments ({ commit }) {
         commit('setDataApartments', response.data)
     })
 }
+
+export function changeBookingStatus({ commit, state }, payload) {
+    if (state && state.apartments && state.apartments.length && payload && payload.id) {
+        let temp = state.apartments.find( x => x.id === payload.id)
+        if (temp) {
+            let indexTemp = state.apartments.indexOf(temp)
+            commit(state.apartments[indexTemp])
+        }
+    }
+}
